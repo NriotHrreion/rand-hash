@@ -15,7 +15,11 @@ fn main() {
         Err(_) => println!("无法复制到剪贴板")
     }
 
-    press_btn_continue::wait("按任意键继续...").unwrap();
+    let term = console::Term::stdout();
+    if term.is_term() {
+        term.write_line("按任意键继续...").unwrap();
+        term.read_key().unwrap();
+    }
 }
 
 fn generate_rand_hash(t: MessageDigest, display_name: &str, str_list: &mut Vec<String>) {
